@@ -6,7 +6,7 @@ Exemplo of a simple lambda with the use of localstack
 
 ## execute the project
 ```bash
-./script/runenv
+./script/runenv.sh
 ```
 
 ## create dir vendor local
