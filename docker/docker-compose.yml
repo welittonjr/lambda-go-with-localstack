@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+
+  go:
+    build:
+      context: .
+      dockerfile: lambda/Dockerfile
+    container_name: go-lambda
+    image: go-lambda
+    environment:
+      - ENV=development
+    ports:
+      - "8080:8080"
+    networks:
+      - service-go
+    volumes:
+      - ../:/app
+
+  localstack:
+    image: localstack/localstack:2.2.0
+    container_name: localstack2
+    ports:
+      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+    environment:
+      SERVICES: lambda
+      DOCKER_HOST: unix:///var/run/docker.sock
+      PORT_WEB_UI: 9070
+      LAMBDA_EXECUTOR: local
+      DEBUG: 1
+      HOSTNAME_EXTERNAL: localstack
+    networks:
+      - service-go
+    volumes:
+      - "/tmp/localstack:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+networks:
+  service-go:
+    driver: bridge
