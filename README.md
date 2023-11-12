@@ -21,5 +21,5 @@ Exemplo of a simple lambda with the use of localstack
 
 ## Invoke of function lambda to localstack
 ```bash
-./script/localstack/deploy.sh
+./script/localstack/invoke.sh
 ```
